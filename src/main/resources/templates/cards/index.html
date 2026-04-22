@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-TW" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>FinX - 我的卡片</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}"/>
+    <link rel="stylesheet" th:href="@{/css/cards.css}"/>
+</head>
+<body>
+
+<div th:replace="fragments/sidebar :: sidebar('cards')"></div>
+
+<main class="main">
+
+    <header class="topbar">
+        <div>
+            <h1 class="page-title">我的卡片</h1>
+            <p class="page-sub">管理你的信用卡與金融卡</p>
+        </div>
+        <div class="topbar-right">
+            <div class="avatar">JW</div>
+        </div>
+    </header>
+
+    <!-- 統計 -->
+    <section class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">▣</div>
+            <div class="stat-info">
+                <p class="stat-label">持有卡片</p>
+                <p class="stat-value" th:text="${cardCount} + ' 張'">2 張</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">💳</div>
+            <div class="stat-info">
+                <p class="stat-label">總信用額度</p>
+                <p class="stat-value"
+                   th:text="'NTD ' + ${#numbers.formatDecimal(totalLimit, 1, 'COMMA', 0, 'POINT')}">
+                   NTD 450,000
+                </p>
+            </div>
+            <span class="stat-change positive">啟用中</span>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🔒</div>
+            <div class="stat-info">
+                <p class="stat-label">安全等級</p>
+                <p class="stat-value">高</p>
+            </div>
+            <span class="stat-change positive">安全</span>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🎁</div>
+            <div class="stat-info">
+                <p class="stat-label">累積回饋</p>
+                <p class="stat-value">NTD 3,280</p>
+            </div>
+            <span class="stat-change positive">+2.1%</span>
+        </div>
+    </section>
+
+    <!-- 卡片列表 -->
+    <section class="cards-grid">
+
+        <!-- 實體卡片 -->
+        <div th:each="card, iter : ${cards}"
+             th:classappend="${card.cardType.name() == 'VISA'} ? ' purple' : ' dark'"
+             class="credit-card">
+            <div class="cc-bg-circle"></div>
+            <div class="cc-top">
+                <div class="cc-chip">▊</div>
+                <span class="cc-brand" th:text="${card.cardType}">VISA</span>
+            </div>
+            <p class="cc-number" th:text="${card.cardNumber}">**** **** **** 4521</p>
+            <div class="cc-bottom">
+                <div>
+                    <p class="cc-meta-label">持卡人</p>
+                    <p class="cc-meta-val" th:text="${card.cardHolder}">JAMES WILSON</p>
+                </div>
+                <div>
+                    <p class="cc-meta-label">有效期限</p>
+                    <p class="cc-meta-val"
+                       th:text="${#temporals.format(card.expiryDate, 'MM/yy')}">08/27</p>
+                </div>
+                <div>
+                    <p class="cc-meta-label">信用額度</p>
+                    <p class="cc-meta-val"
+                       th:text="'NTD ' + ${#numbers.formatDecimal(card.creditLimit, 1, 'COMMA', 0, 'POINT')}">
+                       NTD 300,000
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新增卡片按鈕 -->
+        <div class="add-card-btn">
+            <span style="font-size:32px;color:rgba(124,111,247,0.5)">＋</span>
+            <p>新增卡片</p>
+        </div>
+    </section>
+
+    <!-- 快速功能 -->
+    <section class="card-actions-section">
+        <h3 class="section-title">快速功能</h3>
+        <div class="card-actions-grid">
+            <div class="card-action-item">
+                <div class="ca-icon" style="background:rgba(16,185,129,0.12);color:#10B981">🔒</div>
+                <p class="ca-label">凍結卡片</p>
+            </div>
+            <div class="card-action-item">
+                <div class="ca-icon" style="background:rgba(245,158,11,0.12);color:#F59E0B">💰</div>
+                <p class="ca-label">查看帳單</p>
+            </div>
+            <div class="card-action-item">
+                <div class="ca-icon" style="background:rgba(124,111,247,0.12);color:#7C6FF7">⚙</div>
+                <p class="ca-label">卡片設定</p>
+            </div>
+            <div class="card-action-item">
+                <div class="ca-icon" style="background:rgba(239,68,68,0.12);color:#EF4444">🛡</div>
+                <p class="ca-label">掛失卡片</p>
+            </div>
+            <div class="card-action-item">
+                <div class="ca-icon" style="background:rgba(16,185,129,0.12);color:#10B981">↑</div>
+                <p class="ca-label">提高額度</p>
+            </div>
+            <div class="card-action-item">
+                <div class="ca-icon" style="background:rgba(124,111,247,0.12);color:#7C6FF7">🎁</div>
+                <p class="ca-label">回饋兌換</p>
+            </div>
+        </div>
+    </section>
+
+</main>
+<script th:src="@{/js/dashboard.js}"></script>
+</body>
+</html>

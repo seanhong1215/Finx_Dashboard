@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="zh-TW" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FinX - 交易紀錄</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+    <link rel="stylesheet" th:href="@{/css/transactions.css}" />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar('transactions')"></div>
+
+    <!-- Main -->
+    <main class="main">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div>
+          <h1 class="page-title">交易紀錄</h1>
+          <p class="page-sub">查看所有收支明細</p>
+        </div>
+        <div class="topbar-right">
+          <div class="avatar">JW</div>
+        </div>
+      </header>
+
+      <!-- 統計卡片 -->
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📋</div>
+          <div class="stat-info">
+            <p class="stat-label">總筆數</p>
+            <p class="stat-value" th:text="${totalCount} + ' 筆'">10 筆</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-info">
+            <p class="stat-label">收入筆數</p>
+            <p class="stat-value" th:text="${totalIn} + ' 筆'">2 筆</p>
+          </div>
+          <span class="stat-change positive">收入</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💳</div>
+          <div class="stat-info">
+            <p class="stat-label">支出筆數</p>
+            <p class="stat-value" th:text="${totalOut} + ' 筆'">8 筆</p>
+          </div>
+          <span class="stat-change negative">支出</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📅</div>
+          <div class="stat-info">
+            <p class="stat-label">本月份</p>
+            <p class="stat-value">2025 / 03</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 篩選列 -->
+      <section class="filter-bar">
+        <div class="filter-group">
+          <span class="filter-label">類型：</span>
+          <a
+            th:href="@{/transactions}"
+            th:classappend="${selectedType == null and selectedCategory == null} ? ' active' : ''"
+            class="filter-btn"
+            >全部</a
+          >
+          <a
+            th:href="@{/transactions(type='IN')}"
+            th:classappend="${selectedType == 'IN'} ? ' active' : ''"
+            class="filter-btn income"
+            >收入</a
+          >
+          <a
+            th:href="@{/transactions(type='OUT')}"
+            th:classappend="${selectedType == 'OUT'} ? ' active' : ''"
+            class="filter-btn expense"
+            >支出</a
+          >
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">類別：</span>
+          <a
+            th:href="@{/transactions(category='Salary')}"
+            th:classappend="${selectedCategory == 'Salary'} ? ' active' : ''"
+            class="filter-btn"
+            >薪資</a
+          >
+          <a
+            th:href="@{/transactions(category='Food &amp; Drink')}"
+            th:classappend="${selectedCategory == 'Food &amp; Drink'} ? ' active' : ''"
+            class="filter-btn"
+            >餐飲</a
+          >
+          <a
+            th:href="@{/transactions(category='Shopping')}"
+            th:classappend="${selectedCategory == 'Shopping'} ? ' active' : ''"
+            class="filter-btn"
+            >購物</a
+          >
+          <a
+            th:href="@{/transactions(category='Entertainment')}"
+            th:classappend="${selectedCategory == 'Entertainment'} ? ' active' : ''"
+            class="filter-btn"
+            >娛樂</a
+          >
+          <a
+            th:href="@{/transactions(category='Health')}"
+            th:classappend="${selectedCategory == 'Health'} ? ' active' : ''"
+            class="filter-btn"
+            >健康</a
+          >
+        </div>
+      </section>
+
+      <!-- 交易列表 -->
+      <section class="tx-table-card">
+        <div class="section-header">
+          <h3>明細列表</h3>
+          <span class="record-count" th:text="'共 ' + ${totalCount} + ' 筆'"
+            >共 10 筆</span
+          >
+        </div>
+
+        <!-- 表頭 -->
+        <div class="tx-table-head">
+          <span class="col-date">日期</span>
+          <span class="col-desc">說明</span>
+          <span class="col-cat">類別</span>
+          <span class="col-type">類型</span>
+          <span class="col-amount">金額</span>
+          <span class="col-balance">結餘</span>
+        </div>
+
+        <!-- 空資料 -->
+        <div th:if="${#lists.isEmpty(transactions)}" class="tx-empty">
+          <span style="font-size: 40px">📭</span>
+          <p>目前沒有交易紀錄</p>
+        </div>
+
+        <!-- 資料列 -->
+        <div class="tx-row" th:each="tx : ${transactions}">
+          <span
+            class="col-date"
+            th:text="${#temporals.format(tx.transactedAt, 'yyyy/MM/dd')}"
+            >2025/03/05</span
+          >
+
+          <div class="col-desc">
+            <div class="tx-icon-sm">
+              <span th:switch="${tx.category}">
+                <span th:case="'Salary'">💼</span>
+                <span th:case="'Food &amp; Drink'">☕</span>
+                <span th:case="'Entertainment'">🎬</span>
+                <span th:case="'Shopping'">📦</span>
+                <span th:case="'Health'">🏋️</span>
+                <span th:case="*">💳</span>
+              </span>
+            </div>
+            <span class="tx-desc-text" th:text="${tx.description}"
+              >薪資入帳</span
+            >
+          </div>
+
+          <span class="col-cat">
+            <span class="cat-badge" th:text="${tx.category}">Salary</span>
+          </span>
+
+          <span class="col-type">
+            <span th:if="${tx.income}" class="type-badge type-in">收入</span>
+            <span th:unless="${tx.income}" class="type-badge type-out"
+              >支出</span
+            >
+          </span>
+
+          <span
+            class="col-amount"
+            th:classappend="${tx.income} ? ' amount-in' : ' amount-out'"
+            th:text="${tx.signedAmount}"
+            >+80,000</span
+          >
+
+          <span
+            class="col-balance"
+            th:text="'NTD ' + ${#numbers.formatDecimal(tx.balanceAfter, 1, 'COMMA', 0, 'POINT')}"
+          >
+            NTD 156,500
+          </span>
+        </div>
+      </section>
+    </main>
+
+    <script th:src="@{/js/dashboard.js}"></script>
+  </body>
+</html>

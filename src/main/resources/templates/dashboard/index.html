@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-TW" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>FinX Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}"/>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div th:replace="fragments/sidebar :: sidebar('dashboard')"></div>
+
+<!-- ── Main ────────────────────────────────────────────────────────────────── -->
+<main class="main">
+
+    <!-- Topbar -->
+    <header class="topbar">
+        <div>
+            <h1 class="page-title">Dashboard</h1>
+            <p class="page-sub">歡迎回來，<span th:text="${user.fullName}">James Wilson</span> 👋</p>
+        </div>
+        <div class="topbar-right">
+            <div class="avatar" th:text="${user.avatarInitials}">JW</div>
+        </div>
+    </header>
+
+    <!-- Stats -->
+    <section class="stats-grid">
+        <div class="stat-card" th:each="s : ${stats}">
+            <div class="stat-icon" th:text="${s.icon}">💼</div>
+            <div class="stat-info">
+                <p class="stat-label" th:text="${s.label}">本月收入</p>
+                <p class="stat-value" th:text="${s.value}">NTD 80,000</p>
+            </div>
+            <span class="stat-change"
+                  th:classappend="${s.positive} ? ' positive' : ' negative'"
+                  th:text="${s.change}">+5%</span>
+        </div>
+    </section>
+
+    <!-- Mid Row -->
+    <section class="mid-row">
+
+        <!-- Balance Card -->
+        <div class="balance-card">
+            <div class="balance-bg-circle"></div>
+            <div class="balance-top">
+                <div>
+                    <p class="balance-label">總資產餘額</p>
+                    <h2 class="balance-amount"
+                        th:text="'NTD ' + ${#numbers.formatDecimal(balance.totalBalance, 1, 'COMMA', 0, 'POINT')}">
+                        NTD 156,500
+                    </h2>
+                </div>
+                <span style="font-size:28px;color:rgba(255,215,0,0.8);">▊</span>
+            </div>
+            <p class="card-number" th:text="${balance.maskedCard}">**** **** **** 4521</p>
+            <div class="card-footer">
+                <div>
+                    <p class="card-meta-label">持卡人</p>
+                    <p class="card-meta-val" th:text="${user.fullName}">James Wilson</p>
+                </div>
+                <div>
+                    <p class="card-meta-label">有效期限</p>
+                    <p class="card-meta-val" th:text="${balance.cardExpiry}">08/27</p>
+                </div>
+                <span class="card-type-badge">VISA</span>
+            </div>
+            <div class="quick-actions">
+                <button class="action-btn"><span class="action-icon" style="color:#10B981">↑</span><span>轉帳</span></button>
+                <button class="action-btn"><span class="action-icon" style="color:#7C6FF7">↓</span><span>收款</span></button>
+                <button class="action-btn"><span class="action-icon" style="color:#F59E0B">⟳</span><span>繳費</span></button>
+                <button class="action-btn"><span class="action-icon" style="color:rgba(255,255,255,0.5)">⋯</span><span>更多</span></button>
+            </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <div>
+                    <p class="chart-title">收支趨勢</p>
+                    <p class="chart-sub">近 6 個月</p>
+                </div>
+                <div class="chart-legend">
+                    <span class="dot dot-income"></span><span>收入</span>
+                    <span class="dot dot-expense"></span><span>支出</span>
+                </div>
+            </div>
+            <div class="chart-bars">
+                <div class="bar-group" th:each="c : ${chart}">
+                    <div class="bar-wrap">
+                        <div class="bar bar-income"
+                             th:style="'height:' + ${c.income / 1000} + 'px'"
+                             th:attr="title=${c.income}"></div>
+                        <div class="bar bar-expense"
+                             th:style="'height:' + ${c.expense / 1000} + 'px'"
+                             th:attr="title=${c.expense}"></div>
+                    </div>
+                    <span class="bar-label" th:text="${c.month}">Jan</span>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Bottom Row -->
+    <section class="bottom-row">
+
+        <!-- Transactions -->
+        <div class="tx-card">
+            <div class="section-header">
+                <h3>最近交易</h3>
+                <a href="#" class="see-all">查看全部 →</a>
+            </div>
+            <div class="tx-list">
+                <div th:if="${#lists.isEmpty(transactions)}" class="tx-empty">
+                    目前沒有交易紀錄
+                </div>
+                <div class="tx-item" th:each="tx : ${transactions}">
+                    <div class="tx-icon-wrap">
+                        <span th:switch="${tx.category}">
+                            <span th:case="'Salary'">💼</span>
+                            <span th:case="'Food &amp; Drink'">☕</span>
+                            <span th:case="'Entertainment'">🎬</span>
+                            <span th:case="'Shopping'">📦</span>
+                            <span th:case="'Health'">🏋️</span>
+                            <span th:case="*">💳</span>
+                        </span>
+                    </div>
+                    <div class="tx-info">
+                        <p class="tx-name" th:text="${tx.description}">交易說明</p>
+                        <p class="tx-meta">
+                            <span th:text="${tx.category}">類別</span> ·
+                            <span th:text="${#temporals.format(tx.transactedAt, 'MM/dd')}">03/05</span>
+                        </p>
+                    </div>
+                    <span class="tx-amount"
+                          th:classappend="${tx.income} ? ' tx-in' : ' tx-out'"
+                          th:text="${tx.signedAmount}">+80,000</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary-card">
+            <h3 class="section-title">本月收支</h3>
+            <div class="summary-item">
+                <div class="summary-icon s-income">↑</div>
+                <div>
+                    <p class="summary-label">收入</p>
+                    <p class="summary-value income-text"
+                       th:text="'NTD ' + ${#numbers.formatDecimal(balance.monthlyIncome, 1, 'COMMA', 0, 'POINT')}">
+                        NTD 80,000
+                    </p>
+                </div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-icon s-expense">↓</div>
+                <div>
+                    <p class="summary-label">支出</p>
+                    <p class="summary-value expense-text"
+                       th:text="'NTD ' + ${#numbers.formatDecimal(balance.monthlyExpense, 1, 'COMMA', 0, 'POINT')}">
+                        NTD 32,400
+                    </p>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="savings-row">
+                <span class="savings-label">儲蓄率</span>
+                <span class="savings-value" th:text="${balance.savingsRate} + '%'">59.5%</span>
+            </div>
+            <div class="progress-wrap">
+                <div class="progress-bar" th:style="'width:' + ${balance.savingsRate} + '%'"></div>
+            </div>
+        </div>
+
+    </section>
+</main>
+
+<script th:src="@{/js/dashboard.js}"></script>
+</body>
+</html>

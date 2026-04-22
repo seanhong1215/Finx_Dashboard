@@ -1,0 +1,166 @@
+/* ── 信用卡視覺 ──────────────────────────────────────────────────────────── */
+.cards-grid {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.credit-card {
+    width: 340px;
+    height: 200px;
+    border-radius: 20px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    transition: transform .3s, box-shadow .3s;
+    cursor: pointer;
+}
+.credit-card:hover {
+    transform: translateY(-6px) rotate(1deg);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+}
+.credit-card.purple {
+    background: linear-gradient(135deg, #7C6FF7 0%, #4F46E5 50%, #2D27B5 100%);
+}
+.credit-card.dark {
+    background: linear-gradient(135deg, #1F1F2E 0%, #2D2D44 50%, #111120 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.cc-bg-circle {
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+    pointer-events: none;
+}
+
+.cc-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cc-chip {
+    font-size: 24px;
+    color: rgba(255,215,0,0.85);
+}
+.cc-brand {
+    font-family: var(--font-d);
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 1px;
+}
+
+.cc-number {
+    font-family: monospace;
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.92);
+    text-align: center;
+}
+
+.cc-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.cc-meta-label {
+    font-size: 9px;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+}
+.cc-meta-val {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.92);
+}
+
+/* 新增卡片按鈕 */
+.add-card-btn {
+    width: 340px;
+    height: 200px;
+    border-radius: 20px;
+    border: 2px dashed rgba(124,111,247,0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    color: var(--text3);
+    font-size: 14px;
+    transition: border-color .2s, color .2s;
+}
+.add-card-btn:hover {
+    border-color: rgba(124,111,247,0.6);
+    color: var(--primary);
+}
+
+/* ── 快速功能 ─────────────────────────────────────────────────────────────── */
+.card-actions-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 22px;
+}
+.card-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+}
+.card-action-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 8px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background .2s;
+}
+.card-action-item:hover { background: rgba(255,255,255,0.04); }
+.ca-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+.ca-label {
+    font-size: 12px;
+    color: var(--text2);
+    text-align: center;
+}
+
+@media (max-width: 900px) {
+    .card-actions-grid { grid-template-columns: repeat(3, 1fr); }
+    .credit-card, .add-card-btn { width: 100%; }
+}
+
+/* 卡片刪除按鈕 */
+.card-del-btn {
+    position: absolute;
+    top: 12px; left: 12px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: rgba(239,68,68,0.15);
+    border: 1px solid rgba(239,68,68,0.3);
+    color: #EF4444;
+    font-size: 11px; font-weight: 600;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity .2s;
+}
+.credit-card:hover .card-del-btn { opacity: 1; }
+.credit-card { position: relative; }

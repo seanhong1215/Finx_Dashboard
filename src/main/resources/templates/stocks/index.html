@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-TW" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>FinX - 股票</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}"/>
+    <link rel="stylesheet" th:href="@{/css/invest.css}"/>
+</head>
+<body>
+
+<div th:replace="fragments/sidebar :: sidebar('stocks')"></div>
+
+<main class="main">
+
+    <header class="topbar">
+        <div>
+            <h1 class="page-title">股票投資</h1>
+            <p class="page-sub">NASDAQ · NYSE · 持倉管理</p>
+        </div>
+        <div class="topbar-right">
+            <span class="live-badge">● LIVE</span>
+            <div class="avatar">JW</div>
+        </div>
+    </header>
+
+    <!-- 總覽 -->
+    <section class="portfolio-banner stock-banner">
+        <div class="pb-left">
+            <p class="pb-label">股票投資組合總值</p>
+            <h2 class="pb-value" th:text="'USD ' + ${#numbers.formatDecimal(totalMarketValue, 1, 'COMMA', 2, 'POINT')}">USD 9,874.10</h2>
+            <p class="pb-pnl" th:class="${isProfit} ? 'pb-pnl profit' : 'pb-pnl loss'">
+                <span th:text="${isProfit} ? '▲' : '▼'">▲</span>
+                <span th:text="'USD ' + ${#numbers.formatDecimal(totalPnl, 1, 'COMMA', 2, 'POINT')}">USD 188.40</span>
+                <span th:text="'(' + ${pnlPct} + '%)'"> (+1.9%)</span>
+            </p>
+        </div>
+        <div class="pb-right">
+            <button class="invest-btn">＋ 買入</button>
+            <button class="invest-btn outline">賣出</button>
+        </div>
+    </section>
+
+    <!-- 統計 -->
+    <section class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-info">
+                <p class="stat-label">持有檔數</p>
+                <p class="stat-value" th:text="${stockRows.size()} + ' 檔'">4 檔</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">💹</div>
+            <div class="stat-info">
+                <p class="stat-label">總損益</p>
+                <p class="stat-value" th:class="${isProfit} ? 'stat-value profit-text' : 'stat-value loss-text'"
+                   th:text="'USD ' + ${#numbers.formatDecimal(totalPnl, 1, 'COMMA', 2, 'POINT')}">USD +188.40</p>
+            </div>
+            <span class="stat-change" th:class="${isProfit} ? 'stat-change positive' : 'stat-change negative'"
+                  th:text="${pnlPct} + '%'">+1.9%</span>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🏆</div>
+            <div class="stat-info">
+                <p class="stat-label">最佳表現</p>
+                <p class="stat-value" style="color:#10B981">NVDA +4.7%</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">⚠</div>
+            <div class="stat-info">
+                <p class="stat-label">最大跌幅</p>
+                <p class="stat-value" style="color:#EF4444">TSLA -3.1%</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 持倉列表 -->
+    <section class="invest-table-card">
+        <div class="section-header">
+            <h3>股票持倉</h3>
+            <span class="record-count">市場報價</span>
+        </div>
+
+        <div class="invest-table-head">
+            <span class="ic-coin">股票</span>
+            <span class="ic-price">現價 (USD)</span>
+            <span class="ic-change">漲跌幅</span>
+            <span class="ic-amount">持有股數</span>
+            <span class="ic-value">市值 (USD)</span>
+            <span class="ic-cost">平均成本</span>
+            <span class="ic-pnl">損益</span>
+        </div>
+
+        <div class="invest-row" th:each="row : ${stockRows}">
+            <div class="ic-coin">
+                <div class="stock-badge" th:text="${row.ticker}">AAPL</div>
+                <div>
+                    <p class="coin-symbol" th:text="${row.ticker}">AAPL</p>
+                    <p class="coin-name"   th:text="${row.company}">Apple Inc.</p>
+                </div>
+            </div>
+            <span class="ic-price"  th:text="${row.currentPrice}">178.50</span>
+            <span class="ic-change" th:class="${row.changePositive} ? 'ic-change profit-text' : 'ic-change loss-text'"
+                  th:text="${row.changePctStr}">+1.2%</span>
+            <span class="ic-amount" th:text="${row.shares}">10</span>
+            <span class="ic-value"  th:text="${row.marketValue}">1,785.00</span>
+            <span class="ic-cost"   th:text="${row.avgCost}">170.00</span>
+            <span class="ic-pnl"    th:class="${row.pnlPositive} ? 'ic-pnl profit-text' : 'ic-pnl loss-text'"
+                  th:text="${row.pnlStr}">+85.00</span>
+        </div>
+
+    </section>
+</main>
+<script th:src="@{/js/dashboard.js}"></script>
+</body>
+</html>

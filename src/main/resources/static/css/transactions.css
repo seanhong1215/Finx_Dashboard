@@ -1,0 +1,119 @@
+/* ── 篩選列 ──────────────────────────────────────────────────────────────── */
+.filter-bar {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.filter-label {
+    font-size: 13px;
+    color: var(--text2);
+    min-width: 48px;
+}
+.filter-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text2);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    transition: all .2s;
+    cursor: pointer;
+}
+.filter-btn:hover  { color: var(--text); background: rgba(255,255,255,0.09); }
+.filter-btn.active { color: var(--primary); background: rgba(124,111,247,0.15); border-color: rgba(124,111,247,0.4); }
+.filter-btn.income.active { color: var(--success); background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.3); }
+.filter-btn.expense.active { color: var(--danger); background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.3); }
+
+/* ── 交易表格 ─────────────────────────────────────────────────────────────── */
+.tx-table-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 22px;
+    flex: 1;
+}
+.record-count {
+    font-size: 13px;
+    color: var(--text2);
+}
+
+/* 表頭 */
+.tx-table-head {
+    display: grid;
+    grid-template-columns: 120px 1fr 130px 80px 130px 150px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4px;
+}
+
+/* 資料列 */
+.tx-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 130px 80px 130px 150px;
+    padding: 13px 14px;
+    border-radius: 12px;
+    align-items: center;
+    transition: background .15s;
+    font-size: 14px;
+}
+.tx-row:hover { background: rgba(255,255,255,0.03); }
+
+.col-date   { color: var(--text2); font-size: 13px; }
+.col-desc   { display: flex; align-items: center; gap: 10px; }
+.col-amount { font-family: var(--font-d); font-weight: 700; }
+.col-balance { color: var(--text2); font-size: 13px; }
+
+.tx-icon-sm {
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+}
+.tx-desc-text { font-weight: 500; }
+
+/* 類別 badge */
+.cat-badge {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    background: rgba(255,255,255,0.06);
+    color: var(--text2);
+    white-space: nowrap;
+}
+
+/* 類型 badge */
+.type-badge {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+.type-in  { background: rgba(16,185,129,0.12); color: var(--success); }
+.type-out { background: rgba(239,68,68,0.10);  color: var(--danger); }
+
+/* 金額顏色 */
+.amount-in  { color: var(--success); }
+.amount-out { color: rgba(255,255,255,0.85); }
+
+/* 空資料 */
+.tx-empty {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 12px; padding: 60px;
+    color: var(--text3); font-size: 14px;
+}

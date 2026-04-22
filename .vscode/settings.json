@@ -1,0 +1,17 @@
+{
+  "java.import.gradle.enabled": true,
+  "java.import.gradle.wrapper.enabled": true,
+  "java.import.maven.enabled": false,
+  "java.compile.nullAnalysis.mode": "automatic",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 4,
+  "files.encoding": "utf8",
+  "files.exclude": {
+    "**/.gradle": true,
+    "**/build": true,
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  }
+}

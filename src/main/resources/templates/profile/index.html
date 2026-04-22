@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-TW" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>FinX - 個人設定</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}"/>
+    <link rel="stylesheet" th:href="@{/css/profile.css}"/>
+</head>
+<body>
+
+<div th:replace="fragments/sidebar :: sidebar('profile')"></div>
+
+<main class="main">
+
+    <header class="topbar">
+        <div>
+            <h1 class="page-title">個人設定</h1>
+            <p class="page-sub">管理你的帳號與偏好設定</p>
+        </div>
+        <div class="topbar-right">
+            <div class="avatar" th:text="${avatarInit}">JW</div>
+        </div>
+    </header>
+
+    <div class="profile-layout">
+
+        <!-- 左側：個人資訊 -->
+        <div class="profile-left">
+
+            <!-- 頭像卡片 -->
+            <div class="profile-card avatar-card">
+                <div class="profile-avatar" th:text="${avatarInit}">JW</div>
+                <h2 class="profile-name" th:text="${fullName}">James Wilson</h2>
+                <p class="profile-email" th:text="${email}">james.wilson@example.com</p>
+                <p class="profile-join">加入於 <span th:text="${joinDate}">2023 年 01 月</span></p>
+                <button class="edit-avatar-btn">更換頭像</button>
+            </div>
+
+            <!-- 帳號安全 -->
+            <div class="profile-card">
+                <h3 class="profile-card-title">帳號安全</h3>
+                <div class="security-item">
+                    <div class="si-left">
+                        <span class="si-icon">🔒</span>
+                        <div>
+                            <p class="si-label">兩步驟驗證</p>
+                            <p class="si-sub">已啟用 Google Authenticator</p>
+                        </div>
+                    </div>
+                    <span class="si-badge on">已開啟</span>
+                </div>
+                <div class="security-item">
+                    <div class="si-left">
+                        <span class="si-icon">📱</span>
+                        <div>
+                            <p class="si-label">生物辨識登入</p>
+                            <p class="si-sub">Face ID / 指紋</p>
+                        </div>
+                    </div>
+                    <span class="si-badge on">已開啟</span>
+                </div>
+                <div class="security-item">
+                    <div class="si-left">
+                        <span class="si-icon">📧</span>
+                        <div>
+                            <p class="si-label">電子郵件通知</p>
+                            <p class="si-sub">交易、登入提醒</p>
+                        </div>
+                    </div>
+                    <span class="si-badge off">已關閉</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 右側：設定選單 -->
+        <div class="profile-right">
+
+            <!-- 個人資料 -->
+            <div class="profile-card">
+                <h3 class="profile-card-title">個人資料</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <p class="info-label">全名</p>
+                        <p class="info-value" th:text="${fullName}">James Wilson</p>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-label">電子郵件</p>
+                        <p class="info-value" th:text="${email}">james@example.com</p>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-label">手機號碼</p>
+                        <p class="info-value" th:text="${phone}">+886 912 345 678</p>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-label">居住地區</p>
+                        <p class="info-value">台灣 · 台北市</p>
+                    </div>
+                </div>
+                <button class="save-btn">儲存修改</button>
+            </div>
+
+            <!-- 設定選單 -->
+            <div class="profile-card">
+                <h3 class="profile-card-title">偏好設定</h3>
+                <div class="menu-list">
+                    <div class="menu-item">
+                        <span class="menu-icon">🔔</span>
+                        <span class="menu-label">通知設定</span>
+                        <span class="menu-arrow">›</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="menu-icon">💱</span>
+                        <span class="menu-label">貨幣與語言</span>
+                        <span class="menu-arrow">›</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="menu-icon">🎨</span>
+                        <span class="menu-label">外觀主題</span>
+                        <span class="menu-arrow">›</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="menu-icon">📋</span>
+                        <span class="menu-label">隱私權政策</span>
+                        <span class="menu-arrow">›</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="menu-icon">❓</span>
+                        <span class="menu-label">FAQ 與客服</span>
+                        <span class="menu-arrow">›</span>
+                    </div>
+                    <div class="menu-item danger">
+                        <span class="menu-icon">🚪</span>
+                        <span class="menu-label">登出帳號</span>
+                        <span class="menu-arrow">›</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+<script th:src="@{/js/dashboard.js}"></script>
+</body>
+</html>
