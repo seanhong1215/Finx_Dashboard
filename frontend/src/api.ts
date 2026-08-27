@@ -8,6 +8,7 @@ import type {
   Role,
   User
 } from './types';
+import { demoApi, isDemoMode } from './demoApi';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080';
 
@@ -38,7 +39,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   return json.data;
 }
 
-export const api = {
+const liveApi = {
   login: (username: string, password: string) =>
     request<AuthPayload>('/api/auth/login', {
       method: 'POST',
@@ -99,3 +100,5 @@ export const api = {
   updateUserStatus: (id: number, active: boolean) =>
     request<User>(`/api/admin/users/${id}/status`, { method: 'PATCH', body: JSON.stringify({ active }) })
 };
+
+export const api = isDemoMode ? demoApi : liveApi;

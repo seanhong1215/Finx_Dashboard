@@ -36,6 +36,10 @@ admin / password123
 james / password123
 ```
 
+## Demo 部署
+
+展示時建議用本機 Docker Compose 跑完整前後端，並準備免費靜態 Demo Mode 當公開備援網址。細節請看 [`docs/DEMO_DEPLOYMENT.md`](docs/DEMO_DEPLOYMENT.md)。
+
 ## 系統需求
 
 Finx 解決的是個人日常支出管理問題：
