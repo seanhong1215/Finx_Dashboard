@@ -1,0 +1,11 @@
+.git
+.gitignore
+.gradle
+build
+frontend/node_modules
+frontend/dist
+frontend/test-results
+docs/e2e-report
+*.log
+*.webm
+.env

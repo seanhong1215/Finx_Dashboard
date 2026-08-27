@@ -18,8 +18,7 @@ USER finx
 
 COPY --from=builder /workspace/build/libs/*.jar app.jar
 
-ENV SPRING_PROFILES_ACTIVE=prod \
-    DB_USERNAME=root \
+ENV DB_USERNAME=root \
     DB_PASSWORD=changeme
 
 EXPOSE 8080

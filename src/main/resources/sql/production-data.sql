@@ -1,0 +1,1 @@
+-- Intentionally empty: production must not load demo accounts or sample expenses.

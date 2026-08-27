@@ -44,7 +44,7 @@ if exist "gradle\wrapper\gradle-wrapper.jar" (
 REM ── Step 3: 啟動 ─────────────────────────────────────────────────────────
 echo [3/3] 啟動 FinX Dashboard...
 echo.
-echo       請確認 MySQL 已啟動且已執行 sql\schema.sql
+echo       請確認 MySQL 已啟動；Spring Boot 會自動載入 resources 內的 SQL
 echo.
 gradlew.bat bootRun
 
