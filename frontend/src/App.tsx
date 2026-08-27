@@ -36,6 +36,7 @@ type ExpenseFilterTarget = { category?: string; creditCardId?: number };
 
 const categories = ['餐飲', '交通', '購物', '生活', '訂閱', '醫療', '娛樂', '教育', '其他'];
 const networks: CardNetwork[] = ['VISA', 'MASTERCARD', 'JCB', 'AMEX', 'OTHER'];
+const assetPath = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`;
 
 const emptyExpense = {
   category: '餐飲',
@@ -309,7 +310,7 @@ function DashboardView({ onOpenExpenses }: { onOpenExpenses: (filter: ExpenseFil
   return (
     <section className="dashboard-charts">
       <div className="dashboard-hero">
-        <img src="/assets/dashboard-cover.png" alt="Finx 個人支出分析" />
+        <img src={assetPath('assets/dashboard-cover.png')} alt="Finx 個人支出分析" />
         <div className="dashboard-hero-copy"><span>FINX PERSONAL FINANCE</span><h2>掌握每一筆支出</h2><p>用清楚的圖表，看見自己的消費節奏。</p></div>
       </div>
       <div className="dashboard-toolbar">
