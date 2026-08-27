@@ -227,18 +227,6 @@ VITE_API_BASE_URL=http://localhost:8081 npm run dev
 - [GitHub 與部署文件](docs/GITHUB.md)：Repository、Actions、Secrets、分支保護與部署方式。
 - [獨立封面素材](docs/assets/dashboard-cover-personal-expense.png)：不會被網站引用的備用圖片。
 
-## 已取消功能
-
-以下功能已從第一版移除，避免產品範圍過大：
-
-- 收入
-- 現金帳戶
-- 股票
-- 加密貨幣
-- 資產總覽
-- 信用卡開卡申請
-- 真實銀行串接
-
 ## 常見問題
 
 ### Docker API 連不上
