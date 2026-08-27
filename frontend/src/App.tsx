@@ -180,7 +180,7 @@ function LoginScreen({
   error: string;
   setError: (value: string) => void;
 }) {
-  const [username, setUsername] = useState('admin');
+  const [username, setUsername] = useState('james');
   const [password, setPassword] = useState('password123');
   const [loading, setLoading] = useState(false);
 
@@ -219,7 +219,7 @@ function LoginScreen({
             {loading ? '登入中' : '登入'}
           </button>
         </form>
-        <p className="hint">admin / password123，james / password123</p>
+        {/* <p className="hint">admin / password123，james / password123</p> */}
       </section>
     </main>
   );
