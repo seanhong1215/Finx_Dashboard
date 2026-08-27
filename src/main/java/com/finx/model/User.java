@@ -40,6 +40,10 @@ public class User {
     @Builder.Default
     private Boolean isActive = true;
 
+    @Column(name = "must_change_password", nullable = false)
+    @Builder.Default
+    private Boolean mustChangePassword = false;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 

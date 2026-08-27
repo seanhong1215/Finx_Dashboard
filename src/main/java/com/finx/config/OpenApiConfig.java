@@ -14,8 +14,8 @@ public class OpenApiConfig {
     public OpenAPI finxOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Finx Dashboard API")
-                        .description("Personal Finance Management REST API — manages transactions, cards, stocks, and crypto assets.")
+                        .title("Finx API")
+                        .description("Personal expense tracking REST API for expenses, credit cards, users, and JWT authentication.")
                         .version("1.0.0")
                         .contact(new Contact()
                                 .name("Finx Team")
